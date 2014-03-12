@@ -148,6 +148,39 @@ public final class ViewInteraction {
     return this;
   }
 
+    /**
+     * Checks this {@link View} exists.
+     *
+     * @return true or false
+     */
+    public boolean exists() {
+        ExistHelper eh = new ExistHelper();
+        runSynchronouslyOnUiThread(eh);
+        while(!eh.is_done) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+            }
+        }
+        return eh.it_exists;
+    }
+
+    private class ExistHelper implements Runnable{
+        public boolean it_exists = false;
+        public boolean is_done = false;
+
+        public void run() {
+            uiController.loopMainThreadUntilIdle();
+            Optional<View> targetView = Optional.absent();
+            try {
+                targetView = Optional.of(viewFinder.getView());
+            } catch (NoMatchingViewException nsve) {
+            }
+            it_exists = targetView.isPresent();
+            is_done = true;
+        }
+    }
+
   private void runSynchronouslyOnUiThread(Runnable action) {
     FutureTask<Void> uiTask = new FutureTask<Void>(action, null);
     mainThreadExecutor.execute(uiTask);
