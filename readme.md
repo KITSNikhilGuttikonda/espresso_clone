@@ -15,9 +15,14 @@ Please be aware that Espresso does not contain such funtionality by design, acco
 
 To compile:
 
-- Ubuntu 12.04 LTS
-- sun java version "1.7.0_51"
+- Ubuntu 14.04 Server LTS 64 bits
+- oracle java version "1.7.0_67"
+    - sudo add-apt-repository ppa:webupd8team/java
+    - sudo apt-get update
+    - sudo apt-get install oracle-java7-installer
+    - sudo apt-get install oracle-java7-set-default
 - android sdk 19 (kitkat)
+    - sudo apt-get install libc6-i386 lib32z1 lib32stdc++6
 - mvn install
 
 by the way, it fails compiling the tests, just like the original Espresso code does, but since I need just ./espresso/lib/target/espresso-1.1-bundled.jar
